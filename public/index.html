@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Chat app</title>
-</head>
+ </head>
 <body>
 <p>home page of chat app</p>
+
+<ol id="messages"></ol>
+
+<form id="message-form" action="">
+  <input type="text" name="message" placeholder="Enter your message">
+  <button>Send</button>
+</form>
+
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>   -->
+<script src="/js/lib/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="/socket.io/socket.io.js" charset="utf-8"></script>
 <script src="/js/index.js" charset="utf-8"></script>
 </body>

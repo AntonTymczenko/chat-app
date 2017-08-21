@@ -1,3 +1,4 @@
+// socket.io
 var socket = io()
 
 socket.on('connect', function () {
@@ -9,5 +10,20 @@ socket.on('disconnect', function (){
 
 // custom events:
 socket.on('newMessage', function(msg){
-  console.log('new message', msg)
+  var li = $('<li></li>')
+  li.text(msg.from + ': ' + msg.text)
+  
+  $('#messages').append(li)
+})
+
+//form submit
+$('#message-form').on('submit', function (e) {
+  e.preventDefault()
+
+  socket.emit('createMessage', {
+    from: 'User',
+    text: $('[name=message]').val()
+  }, function(res){
+    console.log('got it!', res)
+  })
 })

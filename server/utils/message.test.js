@@ -9,6 +9,6 @@ describe('generateMessage', ()=> {
     const resp = generateMessage(from, text)
 
     expect(resp.createdAt).toBeA('number')
-    expect(resp).toInclude({text, form})
+    expect(resp).toInclude({text, from})
   })
 })
