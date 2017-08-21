@@ -4,6 +4,8 @@ const path = require('path'),
   http = require('http'),
   socketIO = require('socket.io')
 
+const {generateMessage} = require('./utils/message')
+
 // configuration:
 require('dotenv').config()
 
@@ -20,14 +22,21 @@ app.use(express.static(path.join(__dirname, '../public')))
 io.on('connection', (socket)=> {
   console.log('new user connected')
 
+  socket.emit('newMessage',
+    generateMessage('Admin', 'Welcome to the chat!'))
+  socket.broadcast.emit('newMessage',
+    generateMessage('Admin', 'New user joined the room'))
 
   socket.on('createMessage', (message) => {
     console.log('createMessage', message)
-    io.emit('newMessage', {
-      from: message.from,
-      text: message.text,
-      createdAt: new Date().getTime()
-    })
+
+    io.emit('newMessage', 
+      generateMessage(message.from, message.text))
+    // socket.broadcast.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // })
   })
 
   socket.on('disconnect', ()=> {
