@@ -4,7 +4,9 @@ const path = require('path'),
   http = require('http'),
   socketIO = require('socket.io')
 
-const {generateMessage} = require('./utils/message')
+const {generateMessage} = require('./utils/message'),
+  {generateLocationMessage} = require('./utils/message')
+
 
 // configuration:
 require('dotenv').config()
@@ -33,11 +35,11 @@ io.on('connection', (socket)=> {
 
     io.emit('newMessage',
       generateMessage(message.from, message.text))
-    // socket.broadcast.emit('newMessage', {
-    //   from: message.from,
-    //   text: message.text,
-    //   createdAt: new Date().getTime()
-    // })
+  })
+
+  socket.on('createLocationMessage', ({latitude, longitude})=> {
+    io.emit('newLocationMessage',
+      generateLocationMessage('Admin', latitude, longitude))
   })
 
   socket.on('disconnect', ()=> {
@@ -46,5 +48,6 @@ io.on('connection', (socket)=> {
 })
 
 server.listen(process.env.PORT, ()=>{
-  console.log(`Chat app started on port ${process.env.PORT} in ${process.env.NODE_ENV} mode`)
+  console.log(`Chat app started on port \
+${process.env.PORT} in ${process.env.NODE_ENV} mode`)
 })
