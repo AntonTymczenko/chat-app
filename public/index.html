@@ -5,17 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Chat app</title>
+  <link rel="stylesheet" href="/css/styles.css">
  </head>
-<body>
-<p>home page of chat app</p>
+<body class="chat">
 
-<ol id="messages"></ol>
+<div class="chat__sidebar">
+  <h3>People</h3>
+  <div id="users"></div>
+</div>
+<div class="chat__main">
+  <ol id="messages" class="chat__messages"></ol>
 
-<form id="message-form" action="">
-  <input type="text" name="message" placeholder="Enter your message">
-  <button>Send</button>
-</form>
-<button id="send-location">Send location</button>
+  <div class="chat__footer">
+    <form id="message-form" action="">
+      <input type="text" name="message" placeholder="Enter your message" autofocus autocomplete="off">
+      <button>Send</button>
+    </form>
+    <button id="send-location">Send location</button>
+  </div>
+</div>
 
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>   -->
 <script src="/js/lib/jquery-3.2.1.min.js" charset="utf-8"></script>
