@@ -39,7 +39,7 @@ io.on('connection', (socket)=> {
 
   socket.on('createLocationMessage', ({latitude, longitude})=> {
     io.emit('newLocationMessage',
-      generateLocationMessage('Admin', latitude, longitude))
+      generateLocationMessage('User', latitude, longitude))
   })
 
   socket.on('disconnect', ()=> {

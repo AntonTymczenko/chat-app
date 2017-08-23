@@ -10,17 +10,18 @@ socket.on('disconnect', function (){
 
 // custom events:
 socket.on('newMessage', function(msg){
+  var formattedTime = moment(msg.createdAt).format('H:mm:ss')
   var li = $('<li></li>')
-  li.text(msg.from + ': ' + msg.text)
+  li.text(formattedTime + ' ' + msg.from + ': ' + msg.text)
 
   $('#messages').append(li)
 })
 
 socket.on('newLocationMessage', function (msg) {
-  console.log(msg)
+  var formattedTime = moment(msg.createdAt).format('H:mm:ss')
   var li = $('<li></li>')
   var a = $('<a target="_blank">My current location</a>')
-  li.text(msg.from + ': ')
+  li.text(formattedTime + ' ' + msg.from + ': ')
   a.attr('href', msg.url)
   li.append(a)
   $('#messages').append(li)
@@ -55,7 +56,7 @@ locationButton.on('click', function () {
       longitude: position.coords.longitude
     })
   }, function () {
-    locationButton.removeAttr('disabled').text('Send location')  
+    locationButton.removeAttr('disabled').text('Send location')
     alert('Unable to fetch location')
   })
 })
