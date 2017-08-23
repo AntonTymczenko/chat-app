@@ -8,23 +8,25 @@ socket.on('disconnect', function (){
   console.log('disconnected from server')
 })
 
-// custom events:
-socket.on('newMessage', function(msg){
-  var formattedTime = moment(msg.createdAt).format('H:mm:ss')
-  var li = $('<li></li>')
-  li.text(formattedTime + ' ' + msg.from + ': ' + msg.text)
+//  receiving messages and render them:
+socket.on('newMessage', function({text, from, createdAt}){
+  var html = Mustache.render($('#message-template').html(), {
+    text,
+    from,
+    createdAt: moment(createdAt).format('H:mm:ss')
+  })
 
-  $('#messages').append(li)
+  $('#messages').append(html)
 })
 
-socket.on('newLocationMessage', function (msg) {
-  var formattedTime = moment(msg.createdAt).format('H:mm:ss')
-  var li = $('<li></li>')
-  var a = $('<a target="_blank">My current location</a>')
-  li.text(formattedTime + ' ' + msg.from + ': ')
-  a.attr('href', msg.url)
-  li.append(a)
-  $('#messages').append(li)
+socket.on('newLocationMessage', function({url, from, createdAt}){
+  var html = Mustache.render($('#location-message-template').html(), {
+    url,
+    from,
+    createdAt: moment(createdAt).format('H:mm:ss')
+  })
+
+  $('#messages').append(html)
 })
 
 //form submit
