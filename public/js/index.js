@@ -17,6 +17,7 @@ socket.on('newMessage', function({text, from, createdAt}){
   })
 
   $('#messages').append(html)
+  scrollToBottom()
 })
 
 socket.on('newLocationMessage', function({url, from, createdAt}){
@@ -27,6 +28,7 @@ socket.on('newLocationMessage', function({url, from, createdAt}){
   })
 
   $('#messages').append(html)
+  scrollToBottom()
 })
 
 //form submit
@@ -62,3 +64,22 @@ locationButton.on('click', function () {
     alert('Unable to fetch location')
   })
 })
+
+// autoscroll messages:
+function scrollToBottom () {
+  //selectors:
+  var messages = $('#messages')
+  var newMessage = messages.children('li:last-child')
+
+  //heights:
+  var clientHeight = messages.prop('clientHeight')
+  var scrollTop = messages.prop('scrollTop')
+  var scrollHeight = messages.prop('scrollHeight')
+  var newMessageHeight = newMessage.innerHeight()
+  var lastMessageHeight = newMessage.prev().innerHeight()
+
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight)
+  }
+
+}
